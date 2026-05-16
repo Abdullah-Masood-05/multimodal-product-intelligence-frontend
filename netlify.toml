@@ -1,6 +1,7 @@
 [build]
   command = "npm run build"
-  publish = ".next"
+  publish = "out"
 
 [build.environment]
   NODE_VERSION = "20"
+  NEXT_PUBLIC_API_URL = "https://abdullah-05-multimodal-product-intelligence-api.hf.space"

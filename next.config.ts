@@ -1,7 +1,8 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  // Pure client-side app — static export avoids needing a Node server on the host
+  output: "export",
 };
 
 export default nextConfig;
