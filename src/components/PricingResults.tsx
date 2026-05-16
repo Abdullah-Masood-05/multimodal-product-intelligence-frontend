@@ -1,7 +1,7 @@
 "use client";
 
 import React from 'react';
-import { Tag, TrendingDown, Percent, FileText, CheckCircle2 } from 'lucide-react';
+import { TrendingDown, Percent, FileText, CheckCircle2 } from 'lucide-react';
 
 interface PricingResultsProps {
   data: any;
@@ -11,8 +11,8 @@ export default function PricingResults({ data }: PricingResultsProps) {
   if (!data || !data.ideal_price_point) return null;
 
   return (
-    <div className="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
-      
+    <div className="bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-800 shadow-sm overflow-hidden">
+
       {/* Header Banner */}
       <div className="bg-gradient-to-r from-amber-500 to-orange-500 px-6 py-8 text-white text-center">
         <p className="text-amber-100 uppercase tracking-wider font-bold text-sm mb-2">Ideal Price Point</p>
@@ -30,33 +30,33 @@ export default function PricingResults({ data }: PricingResultsProps) {
       {/* Details Grid */}
       <div className="p-6">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-          <div className="bg-gray-50 rounded-xl p-5 border border-gray-100">
-            <div className="flex items-center gap-2 text-gray-500 font-bold uppercase text-xs mb-3">
+          <div className="bg-gray-50 dark:bg-gray-800/60 rounded-xl p-5 border border-gray-100 dark:border-gray-800">
+            <div className="flex items-center gap-2 text-gray-500 dark:text-gray-400 font-bold uppercase text-xs mb-3">
               <TrendingDown className="w-4 h-4" /> Margin Risk
             </div>
             <p className={`text-lg font-bold ${
-              data.margin_risk.toLowerCase() === 'high' ? 'text-red-600' :
-              data.margin_risk.toLowerCase() === 'medium' ? 'text-amber-600' :
-              'text-green-600'
+              data.margin_risk.toLowerCase() === 'high' ? 'text-red-600 dark:text-red-400' :
+              data.margin_risk.toLowerCase() === 'medium' ? 'text-amber-600 dark:text-amber-400' :
+              'text-green-600 dark:text-green-400'
             }`}>
               {data.margin_risk} Risk
             </p>
           </div>
 
-          <div className="bg-gray-50 rounded-xl p-5 border border-gray-100">
-            <div className="flex items-center gap-2 text-gray-500 font-bold uppercase text-xs mb-3">
+          <div className="bg-gray-50 dark:bg-gray-800/60 rounded-xl p-5 border border-gray-100 dark:border-gray-800">
+            <div className="flex items-center gap-2 text-gray-500 dark:text-gray-400 font-bold uppercase text-xs mb-3">
               <Percent className="w-4 h-4" /> Recommended Discount
             </div>
-            <p className="text-lg font-bold text-gray-900">{data.recommended_discount}</p>
+            <p className="text-lg font-bold text-gray-900 dark:text-gray-100">{data.recommended_discount}</p>
           </div>
         </div>
 
         {/* Strategy Rationale */}
-        <div className="bg-amber-50/50 rounded-xl p-5 border border-amber-100">
-          <div className="flex items-center gap-2 text-amber-800 font-bold uppercase text-xs mb-3">
+        <div className="bg-amber-50/50 dark:bg-amber-950/30 rounded-xl p-5 border border-amber-100 dark:border-amber-900">
+          <div className="flex items-center gap-2 text-amber-800 dark:text-amber-300 font-bold uppercase text-xs mb-3">
             <FileText className="w-4 h-4" /> Strategy Rationale
           </div>
-          <p className="text-sm text-gray-700 leading-relaxed">
+          <p className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed">
             {data.strategy_rationale}
           </p>
         </div>

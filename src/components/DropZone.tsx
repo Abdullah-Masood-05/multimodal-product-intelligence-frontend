@@ -15,7 +15,7 @@ export default function DropZone({ onResult, onError }: DropZoneProps) {
 
   const onDrop = useCallback(async (acceptedFiles: File[]) => {
     if (acceptedFiles.length === 0) return;
-    
+
     const file = acceptedFiles[0];
     setLoading(true);
     try {
@@ -40,25 +40,27 @@ export default function DropZone({ onResult, onError }: DropZoneProps) {
   });
 
   return (
-    <div 
-      {...getRootProps()} 
+    <div
+      {...getRootProps()}
       className={`border-2 border-dashed rounded-xl p-12 text-center cursor-pointer transition-all
-        ${isDragActive ? 'border-blue-500 bg-blue-50' : 'border-gray-300 hover:border-gray-400 bg-gray-50'}`}
+        ${isDragActive
+          ? 'border-blue-500 bg-blue-50 dark:bg-blue-950/30'
+          : 'border-gray-300 dark:border-gray-700 hover:border-gray-400 dark:hover:border-gray-600 bg-gray-50 dark:bg-gray-900/60'}`}
     >
       <input {...getInputProps()} />
       {loading ? (
-        <div className="flex flex-col items-center text-gray-500">
+        <div className="flex flex-col items-center text-gray-500 dark:text-gray-400">
           <Loader2 className="w-12 h-12 mb-4 animate-spin text-blue-500" />
           <p className="text-lg font-medium">Analyzing product image...</p>
         </div>
       ) : (
-        <div className="flex flex-col items-center text-gray-500">
-          <UploadCloud className="w-12 h-12 mb-4 text-gray-400" />
+        <div className="flex flex-col items-center text-gray-500 dark:text-gray-400">
+          <UploadCloud className="w-12 h-12 mb-4 text-gray-400 dark:text-gray-500" />
           <p className="text-lg font-medium mb-1">
             {isDragActive ? "Drop the image here" : "Drag & drop product image here"}
           </p>
           <p className="text-sm">or click to select file</p>
-          <div className="flex items-center gap-2 mt-4 text-xs text-gray-400">
+          <div className="flex items-center gap-2 mt-4 text-xs text-gray-400 dark:text-gray-500">
             <ImageIcon className="w-4 h-4" />
             <span>Supports JPG, PNG, WEBP</span>
           </div>

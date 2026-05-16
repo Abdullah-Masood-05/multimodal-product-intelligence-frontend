@@ -19,8 +19,8 @@ function CopyButton({ text }: { text: string }) {
     setTimeout(() => setCopied(false), 2000);
   };
   return (
-    <button onClick={handleCopy} className="flex items-center gap-1 text-xs px-2 py-1 rounded bg-gray-100 hover:bg-gray-200 transition-colors">
-      {copied ? <><Check className="w-3 h-3 text-green-600" /> Copied</> : <><Copy className="w-3 h-3" /> Copy</>}
+    <button onClick={handleCopy} className="flex items-center gap-1 text-xs px-2 py-1 rounded bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
+      {copied ? <><Check className="w-3 h-3 text-green-600 dark:text-green-400" /> Copied</> : <><Copy className="w-3 h-3" /> Copy</>}
     </button>
   );
 }
@@ -30,8 +30,8 @@ function renderValue(val: any, depth: number = 0): React.ReactNode {
     const charCount = val.length;
     return (
       <div className="flex items-start gap-2">
-        <p className="text-sm text-gray-700 whitespace-pre-wrap flex-1">{val}</p>
-        <span className="text-xs text-gray-400 whitespace-nowrap">{charCount} chars</span>
+        <p className="text-sm text-gray-700 dark:text-gray-300 whitespace-pre-wrap flex-1">{val}</p>
+        <span className="text-xs text-gray-400 dark:text-gray-500 whitespace-nowrap">{charCount} chars</span>
         <CopyButton text={val} />
       </div>
     );
@@ -41,10 +41,10 @@ function renderValue(val: any, depth: number = 0): React.ReactNode {
       <div className="space-y-1">
         {val.map((item, i) => (
           <div key={i} className="flex items-center gap-2">
-            <span className="text-xs text-gray-400 w-5">{i + 1}.</span>
+            <span className="text-xs text-gray-400 dark:text-gray-500 w-5">{i + 1}.</span>
             {typeof item === 'string' ? (
               <div className="flex items-center gap-2 flex-1">
-                <span className="text-sm text-gray-700 flex-1">{item}</span>
+                <span className="text-sm text-gray-700 dark:text-gray-300 flex-1">{item}</span>
                 <CopyButton text={item} />
               </div>
             ) : (
@@ -57,17 +57,17 @@ function renderValue(val: any, depth: number = 0): React.ReactNode {
   }
   if (typeof val === 'object' && val !== null) {
     return (
-      <div className={`space-y-3 ${depth > 0 ? 'pl-3 border-l-2 border-gray-100' : ''}`}>
+      <div className={`space-y-3 ${depth > 0 ? 'pl-3 border-l-2 border-gray-100 dark:border-gray-800' : ''}`}>
         {Object.entries(val).map(([k, v]) => (
           <div key={k}>
-            <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1">{k.replace(/_/g, ' ')}</p>
+            <p className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-1">{k.replace(/_/g, ' ')}</p>
             {renderValue(v, depth + 1)}
           </div>
         ))}
       </div>
     );
   }
-  return <p className="text-sm text-gray-700">{String(val)}</p>;
+  return <p className="text-sm text-gray-700 dark:text-gray-300">{String(val)}</p>;
 }
 
 function ChannelCard({ channel, data }: { channel: string; data: any }) {
@@ -76,7 +76,7 @@ function ChannelCard({ channel, data }: { channel: string; data: any }) {
   const fullText = JSON.stringify(data, null, 2);
 
   return (
-    <div className="bg-white rounded-xl border border-gray-100 shadow-sm overflow-hidden">
+    <div className="bg-white dark:bg-gray-900 rounded-xl border border-gray-100 dark:border-gray-800 shadow-sm overflow-hidden">
       <div className={`${meta.color} px-4 py-2.5 flex items-center justify-between`}>
         <div className="flex items-center gap-2 text-white">
           <Icon className="w-4 h-4" />
@@ -104,15 +104,15 @@ export default function CampaignResults({ data }: CampaignResultsProps) {
   return (
     <div className="space-y-4">
       {/* Summary Bar */}
-      <div className="bg-purple-50 border border-purple-100 rounded-xl px-4 py-3 flex flex-wrap items-center justify-between gap-2 text-sm">
+      <div className="bg-purple-50 dark:bg-purple-950/40 border border-purple-100 dark:border-purple-900 rounded-xl px-4 py-3 flex flex-wrap items-center justify-between gap-2 text-sm">
         <div className="flex items-center gap-4">
-          <span className="text-purple-700 font-semibold">{channels_generated} channels generated</span>
-          <span className="text-gray-500">|</span>
-          <span className="text-gray-600">Audience: {audience}</span>
-          <span className="text-gray-500">|</span>
-          <span className="text-gray-600">Budget: {budget}</span>
+          <span className="text-purple-700 dark:text-purple-300 font-semibold">{channels_generated} channels generated</span>
+          <span className="text-gray-500 dark:text-gray-600">|</span>
+          <span className="text-gray-600 dark:text-gray-400">Audience: {audience}</span>
+          <span className="text-gray-500 dark:text-gray-600">|</span>
+          <span className="text-gray-600 dark:text-gray-400">Budget: {budget}</span>
         </div>
-        {latency_ms && <span className="text-gray-400 text-xs">{(latency_ms / 1000).toFixed(1)}s</span>}
+        {latency_ms && <span className="text-gray-400 dark:text-gray-500 text-xs">{(latency_ms / 1000).toFixed(1)}s</span>}
       </div>
 
       {/* Channel Cards */}

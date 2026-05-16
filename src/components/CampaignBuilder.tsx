@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useCallback, useState, useRef } from 'react';
+import React, { useCallback, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { UploadCloud, Megaphone, Loader2, X } from 'lucide-react';
 import { generateCampaign } from '../lib/api';
@@ -9,6 +9,10 @@ interface CampaignBuilderProps {
   onResult: (data: any) => void;
   onError: (error: string) => void;
 }
+
+const inputClass = `w-full px-4 py-2.5 border border-gray-300 dark:border-gray-700 rounded-lg text-sm
+  text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-900 placeholder-gray-400 dark:placeholder-gray-500
+  focus:ring-2 focus:ring-purple-500 focus:border-transparent outline-none`;
 
 export default function CampaignBuilder({ onResult, onError }: CampaignBuilderProps) {
   const [loading, setLoading] = useState(false);
@@ -57,56 +61,58 @@ export default function CampaignBuilder({ onResult, onError }: CampaignBuilderPr
         <div
           {...getRootProps()}
           className={`border-2 border-dashed rounded-xl p-8 text-center cursor-pointer transition-all
-            ${isDragActive ? 'border-purple-500 bg-purple-50' : 'border-gray-300 hover:border-gray-400 bg-gray-50'}`}
+            ${isDragActive
+              ? 'border-purple-500 bg-purple-50 dark:bg-purple-950/30'
+              : 'border-gray-300 dark:border-gray-700 hover:border-gray-400 dark:hover:border-gray-600 bg-gray-50 dark:bg-gray-900/60'}`}
         >
           <input {...getInputProps()} />
-          <UploadCloud className="w-10 h-10 mx-auto mb-3 text-gray-400" />
-          <p className="text-sm font-medium text-gray-600">Drop product image here or click to select</p>
+          <UploadCloud className="w-10 h-10 mx-auto mb-3 text-gray-400 dark:text-gray-500" />
+          <p className="text-sm font-medium text-gray-600 dark:text-gray-300">Drop product image here or click to select</p>
         </div>
       ) : (
         <div className="relative w-full">
-          <img src={preview} alt="Product" className="w-full max-h-48 object-contain rounded-xl border border-gray-200" />
-          <button onClick={clearImage} className="absolute top-2 right-2 bg-white rounded-full p-1 shadow hover:bg-gray-100">
-            <X className="w-4 h-4 text-gray-600" />
+          <img src={preview} alt="Product" className="w-full max-h-48 object-contain rounded-xl border border-gray-200 dark:border-gray-800" />
+          <button onClick={clearImage} className="absolute top-2 right-2 bg-white dark:bg-gray-800 rounded-full p-1 shadow hover:bg-gray-100 dark:hover:bg-gray-700">
+            <X className="w-4 h-4 text-gray-600 dark:text-gray-300" />
           </button>
         </div>
       )}
 
       {/* Audience */}
       <div>
-        <label className="block text-sm font-semibold text-gray-700 mb-1">Target Audience</label>
+        <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1">Target Audience</label>
         <input
           type="text"
           value={audience}
           onChange={(e) => setAudience(e.target.value)}
           placeholder="e.g. Women 25-35 in Lahore, interested in fashion"
-          className="w-full px-4 py-2.5 border border-gray-300 rounded-lg text-sm text-gray-900 focus:ring-2 focus:ring-purple-500 focus:border-transparent outline-none"
+          className={inputClass}
           disabled={loading}
         />
       </div>
 
       {/* Budget */}
       <div>
-        <label className="block text-sm font-semibold text-gray-700 mb-1">Daily Budget</label>
+        <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1">Daily Budget</label>
         <input
           type="text"
           value={budget}
           onChange={(e) => setBudget(e.target.value)}
           placeholder="e.g. PKR 5000/day or $50/day"
-          className="w-full px-4 py-2.5 border border-gray-300 rounded-lg text-sm text-gray-900 focus:ring-2 focus:ring-purple-500 focus:border-transparent outline-none"
+          className={inputClass}
           disabled={loading}
         />
       </div>
 
       {/* Optional Product Info */}
       <div>
-        <label className="block text-sm font-semibold text-gray-700 mb-1">Product Info <span className="text-gray-400 font-normal">(optional — AI auto-detects from image)</span></label>
+        <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1">Product Info <span className="text-gray-400 dark:text-gray-500 font-normal">(optional — AI auto-detects from image)</span></label>
         <textarea
           value={productInfo}
           onChange={(e) => setProductInfo(e.target.value)}
           placeholder="e.g. Handmade leather bag, genuine cowhide, available in 3 colors"
           rows={2}
-          className="w-full px-4 py-2.5 border border-gray-300 rounded-lg text-sm text-gray-900 focus:ring-2 focus:ring-purple-500 focus:border-transparent outline-none resize-none"
+          className={`${inputClass} resize-none`}
           disabled={loading}
         />
       </div>
@@ -115,7 +121,7 @@ export default function CampaignBuilder({ onResult, onError }: CampaignBuilderPr
       <button
         onClick={handleSubmit}
         disabled={loading || !file}
-        className="w-full py-3 bg-purple-600 hover:bg-purple-700 disabled:bg-gray-300 text-white font-semibold rounded-xl
+        className="w-full py-3 bg-purple-600 hover:bg-purple-700 disabled:bg-gray-300 dark:disabled:bg-gray-800 dark:disabled:text-gray-500 text-white font-semibold rounded-xl
           transition-all flex items-center justify-center gap-2 text-sm"
       >
         {loading ? (

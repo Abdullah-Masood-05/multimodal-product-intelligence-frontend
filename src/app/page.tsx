@@ -11,8 +11,17 @@ import MarketResearcher from '@/components/MarketResearcher';
 import MarketResults from '@/components/MarketResults';
 import PricingStrategist from '@/components/PricingStrategist';
 import PricingResults from '@/components/PricingResults';
+import ThemeToggle from '@/components/ThemeToggle';
 
 type Tab = 'analyze' | 'campaign' | 'twin' | 'market' | 'pricing';
+
+const TABS: { id: Tab; label: string }[] = [
+  { id: 'analyze', label: '🔍 Product Analysis' },
+  { id: 'campaign', label: '📢 Ad Campaign' },
+  { id: 'twin', label: '🤖 Twin Simulator' },
+  { id: 'market', label: '📊 Market Researcher' },
+  { id: 'pricing', label: '💰 Pricing Strategist' },
+];
 
 export default function Home() {
   const [tab, setTab] = useState<Tab>('analyze');
@@ -52,53 +61,35 @@ export default function Home() {
   const handlePricingResult = (data: any) => { setPricingResult(data); setPricingError(null); };
   const handlePricingError = (msg: string) => { setPricingError(msg); setPricingResult(null); };
 
+  const errorBox = "bg-red-50 dark:bg-red-950/40 text-red-600 dark:text-red-400 p-4 rounded-lg border border-red-100 dark:border-red-900 text-center text-sm";
+
   return (
-    <main className="min-h-screen bg-gray-50 p-8">
+    <main className="min-h-screen bg-gray-50 dark:bg-gray-950 p-4 sm:p-8 transition-colors">
       <div className="max-w-4xl mx-auto space-y-8">
         {/* Header */}
-        <header className="text-center mb-8">
-          <h1 className="text-4xl font-extrabold text-gray-900 tracking-tight">Product IQ</h1>
-          <p className="text-lg text-gray-500 mt-2">AI-powered multimodal product intelligence</p>
+        <header className="relative text-center mb-8">
+          <div className="absolute right-0 top-0">
+            <ThemeToggle />
+          </div>
+          <h1 className="text-4xl font-extrabold text-gray-900 dark:text-gray-50 tracking-tight">Product IQ</h1>
+          <p className="text-lg text-gray-500 dark:text-gray-400 mt-2">AI-powered multimodal product intelligence</p>
         </header>
 
         {/* Tabs */}
         <div className="flex justify-center">
-          <div className="inline-flex rounded-xl bg-gray-100 p-1">
-            <button
-              onClick={() => setTab('analyze')}
-              className={`px-6 py-2.5 rounded-lg text-sm font-semibold transition-all
-                ${tab === 'analyze' ? 'bg-white text-gray-900 shadow-sm' : 'text-gray-500 hover:text-gray-700'}`}
-            >
-              🔍 Product Analysis
-            </button>
-            <button
-              onClick={() => setTab('campaign')}
-              className={`px-6 py-2.5 rounded-lg text-sm font-semibold transition-all
-                ${tab === 'campaign' ? 'bg-white text-gray-900 shadow-sm' : 'text-gray-500 hover:text-gray-700'}`}
-            >
-              📢 Ad Campaign
-            </button>
-            <button
-              onClick={() => setTab('twin')}
-              className={`px-6 py-2.5 rounded-lg text-sm font-semibold transition-all
-                ${tab === 'twin' ? 'bg-white text-gray-900 shadow-sm' : 'text-gray-500 hover:text-gray-700'}`}
-            >
-              🤖 Twin Simulator
-            </button>
-            <button
-              onClick={() => setTab('market')}
-              className={`px-6 py-2.5 rounded-lg text-sm font-semibold transition-all
-                ${tab === 'market' ? 'bg-white text-gray-900 shadow-sm' : 'text-gray-500 hover:text-gray-700'}`}
-            >
-              📊 Market Researcher
-            </button>
-            <button
-              onClick={() => setTab('pricing')}
-              className={`px-6 py-2.5 rounded-lg text-sm font-semibold transition-all
-                ${tab === 'pricing' ? 'bg-white text-gray-900 shadow-sm' : 'text-gray-500 hover:text-gray-700'}`}
-            >
-              💰 Pricing Strategist
-            </button>
+          <div className="inline-flex flex-wrap justify-center gap-1 rounded-xl bg-gray-100 dark:bg-gray-900 p-1">
+            {TABS.map(({ id, label }) => (
+              <button
+                key={id}
+                onClick={() => setTab(id)}
+                className={`px-4 sm:px-6 py-2.5 rounded-lg text-sm font-semibold transition-all
+                  ${tab === id
+                    ? 'bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 shadow-sm'
+                    : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200'}`}
+              >
+                {label}
+              </button>
+            ))}
           </div>
         </div>
 
@@ -106,9 +97,7 @@ export default function Home() {
         {tab === 'analyze' && (
           <section className="space-y-6">
             <DropZone onResult={handleAnalyzeResult} onError={handleAnalyzeError} />
-            {analyzeError && (
-              <div className="bg-red-50 text-red-600 p-4 rounded-lg border border-red-100 text-center text-sm">{analyzeError}</div>
-            )}
+            {analyzeError && <div className={errorBox}>{analyzeError}</div>}
             {analyzeResult && <ResultPanel data={analyzeResult} />}
           </section>
         )}
@@ -117,9 +106,7 @@ export default function Home() {
         {tab === 'campaign' && (
           <section className="space-y-6">
             <CampaignBuilder onResult={handleCampaignResult} onError={handleCampaignError} />
-            {campaignError && (
-              <div className="bg-red-50 text-red-600 p-4 rounded-lg border border-red-100 text-center text-sm">{campaignError}</div>
-            )}
+            {campaignError && <div className={errorBox}>{campaignError}</div>}
             {campaignResult && <CampaignResults data={campaignResult} />}
           </section>
         )}
@@ -128,9 +115,7 @@ export default function Home() {
         {tab === 'twin' && (
           <section className="space-y-6">
             <TwinSimulator onResult={handleTwinResult} onError={handleTwinError} />
-            {twinError && (
-              <div className="bg-red-50 text-red-600 p-4 rounded-lg border border-red-100 text-center text-sm">{twinError}</div>
-            )}
+            {twinError && <div className={errorBox}>{twinError}</div>}
             {twinResult && <TwinResults data={twinResult} />}
           </section>
         )}
@@ -139,9 +124,7 @@ export default function Home() {
         {tab === 'market' && (
           <section className="space-y-6">
             <MarketResearcher onResult={handleMarketResult} onError={handleMarketError} />
-            {marketError && (
-              <div className="bg-red-50 text-red-600 p-4 rounded-lg border border-red-100 text-center text-sm">{marketError}</div>
-            )}
+            {marketError && <div className={errorBox}>{marketError}</div>}
             {marketResult && <MarketResults data={marketResult} />}
           </section>
         )}
@@ -150,9 +133,7 @@ export default function Home() {
         {tab === 'pricing' && (
           <section className="space-y-6">
             <PricingStrategist onResult={handlePricingResult} onError={handlePricingError} />
-            {pricingError && (
-              <div className="bg-red-50 text-red-600 p-4 rounded-lg border border-red-100 text-center text-sm">{pricingError}</div>
-            )}
+            {pricingError && <div className={errorBox}>{pricingError}</div>}
             {pricingResult && <PricingResults data={pricingResult} />}
           </section>
         )}

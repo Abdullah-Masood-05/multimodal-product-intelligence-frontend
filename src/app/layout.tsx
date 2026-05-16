@@ -17,6 +17,9 @@ export const metadata: Metadata = {
   description: "Multimodal AI-powered product analysis, pricing, and catalog generation",
 };
 
+// Dark is the default; only an explicit "light" preference switches it off.
+const themeInitScript = `try{if(localStorage.getItem('theme')==='light'){document.documentElement.classList.remove('dark')}}catch(e){}`;
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -25,8 +28,12 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased dark`}
+      suppressHydrationWarning
     >
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
+      </head>
       <body className="min-h-full flex flex-col">{children}</body>
     </html>
   );

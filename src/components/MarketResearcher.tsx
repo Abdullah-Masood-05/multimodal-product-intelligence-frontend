@@ -10,11 +10,15 @@ interface MarketResearcherProps {
   onError: (error: string) => void;
 }
 
+const inputClass = `w-full px-4 py-2.5 border border-gray-300 dark:border-gray-700 rounded-lg text-sm
+  text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-900 placeholder-gray-400 dark:placeholder-gray-500
+  focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none`;
+
 export default function MarketResearcher({ onResult, onError }: MarketResearcherProps) {
   const [loading, setLoading] = useState(false);
   const [file, setFile] = useState<File | null>(null);
   const [preview, setPreview] = useState<string | null>(null);
-  
+
   const [price, setPrice] = useState('');
   const [description, setDescription] = useState('');
 
@@ -57,42 +61,44 @@ export default function MarketResearcher({ onResult, onError }: MarketResearcher
         <div
           {...getRootProps()}
           className={`border-2 border-dashed rounded-xl p-8 text-center cursor-pointer transition-all
-            ${isDragActive ? 'border-blue-500 bg-blue-50' : 'border-gray-300 hover:border-gray-400 bg-gray-50'}`}
+            ${isDragActive
+              ? 'border-blue-500 bg-blue-50 dark:bg-blue-950/30'
+              : 'border-gray-300 dark:border-gray-700 hover:border-gray-400 dark:hover:border-gray-600 bg-gray-50 dark:bg-gray-900/60'}`}
         >
           <input {...getInputProps()} />
-          <UploadCloud className="w-10 h-10 mx-auto mb-3 text-gray-400" />
-          <p className="text-sm font-medium text-gray-600">Drop target product image to scan market</p>
+          <UploadCloud className="w-10 h-10 mx-auto mb-3 text-gray-400 dark:text-gray-500" />
+          <p className="text-sm font-medium text-gray-600 dark:text-gray-300">Drop target product image to scan market</p>
         </div>
       ) : (
         <div className="relative w-full">
-          <img src={preview} alt="Product" className="w-full max-h-48 object-contain rounded-xl border border-gray-200" />
-          <button onClick={clearImage} className="absolute top-2 right-2 bg-white rounded-full p-1 shadow hover:bg-gray-100">
-            <X className="w-4 h-4 text-gray-600" />
+          <img src={preview} alt="Product" className="w-full max-h-48 object-contain rounded-xl border border-gray-200 dark:border-gray-800" />
+          <button onClick={clearImage} className="absolute top-2 right-2 bg-white dark:bg-gray-800 rounded-full p-1 shadow hover:bg-gray-100 dark:hover:bg-gray-700">
+            <X className="w-4 h-4 text-gray-600 dark:text-gray-300" />
           </button>
         </div>
       )}
 
-      {/* Inputs grid */}
+      {/* Inputs */}
       <div>
-        <label className="block text-sm font-semibold text-gray-700 mb-1">Target Price</label>
+        <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1">Target Price</label>
         <input
           type="text"
           value={price}
           onChange={(e) => setPrice(e.target.value)}
           placeholder="e.g. $899"
-          className="w-full px-4 py-2.5 border border-gray-300 rounded-lg text-sm text-gray-900 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
+          className={inputClass}
           disabled={loading}
         />
       </div>
 
       <div>
-        <label className="block text-sm font-semibold text-gray-700 mb-1">Product Description</label>
+        <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1">Product Description</label>
         <textarea
           value={description}
           onChange={(e) => setDescription(e.target.value)}
           placeholder="Detailed description of features to compare..."
           rows={3}
-          className="w-full px-4 py-2.5 border border-gray-300 rounded-lg text-sm text-gray-900 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none resize-none"
+          className={`${inputClass} resize-none`}
           disabled={loading}
         />
       </div>
@@ -101,7 +107,7 @@ export default function MarketResearcher({ onResult, onError }: MarketResearcher
       <button
         onClick={handleSubmit}
         disabled={loading || !file}
-        className="w-full py-3 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-300 text-white font-semibold rounded-xl
+        className="w-full py-3 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-300 dark:disabled:bg-gray-800 dark:disabled:text-gray-500 text-white font-semibold rounded-xl
           transition-all flex items-center justify-center gap-2 text-sm"
       >
         {loading ? (
