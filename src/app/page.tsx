@@ -71,6 +71,7 @@ export default function Home() {
           <div className="absolute right-0 top-0">
             <ThemeToggle />
           </div>
+          <img src="/logo.svg" alt="ProductIQ logo" className="w-20 h-20 mx-auto mb-3 rounded-2xl" />
           <h1 className="text-4xl font-extrabold text-gray-900 dark:text-gray-50 tracking-tight">Product IQ</h1>
           <p className="text-lg text-gray-500 dark:text-gray-400 mt-2">AI-powered multimodal product intelligence</p>
         </header>
